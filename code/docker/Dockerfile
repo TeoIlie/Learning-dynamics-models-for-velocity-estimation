@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.6.2-base-ubuntu20.04 as base
+FROM nvidia/cuda:11.6.2-base-ubuntu20.04 AS base
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y python3-pip python-is-python3 git vim python3-tk

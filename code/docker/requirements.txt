@@ -5,4 +5,4 @@ torchdiffeq
 attrs
 icecream
 pandas
-wandb
+wandb<=0.15.12

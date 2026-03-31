@@ -14,6 +14,13 @@ cd code/docker && ./build.sh   # build image
 cd <repo_root> && ./code/docker/run.sh   # run container (mounts repo at /learning_through_kalman_filter)
 ```
 
+Inside the container run: 
+```bash
+pip install wandb --upgrade
+```
+
+This is required to update wandb so API key matches new format.
+
 Dependencies: PyTorch, torchdiffeq, numpy, matplotlib, pandas, wandb, attrs, icecream.
 
 `PYTHONPATH` is set to `/learning_through_kalman_filter` inside the container. All Python imports are relative to `code/`.
