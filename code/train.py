@@ -61,13 +61,16 @@ def train_ukf(args, state_dim=5, control_dim=2):
     if args.res_enable == 0:
         model, fit_params = create_base_model(args)
         model_dict = find_model(args, "base")
-        model.load_state_dict(model_dict)
+        model.load_state_dict(model_dict, strict=False)
     else:
         model, fit_params = create_residual_model(args)
         res_model_dict = find_model(args, "res")
-        model.load_state_dict(res_model_dict)
+        model.load_state_dict(res_model_dict, strict=False)
 
+    model = model.to(device)
+    fit_params = list(model.parameters())
     noise_model = get_noise_model(args)
+    noise_model = noise_model.to(device)
 
     train_loader, test_loader, train_dset, test_dset = get_sequence_loaders(
         args, mode)

@@ -22,5 +22,5 @@ class ResidualNeuralModel(torch.nn.Module):
 
     def forward(self, t, x):
         x_dot = torch.concat([self.nn(x),
-                              torch.zeros(x.shape[:-1] + (3,))], dim=-1)
+                              torch.zeros(x.shape[:-1] + (3,), device=x.device, dtype=x.dtype)], dim=-1)
         return x_dot + self.model(t, x)
