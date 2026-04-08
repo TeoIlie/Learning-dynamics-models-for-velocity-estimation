@@ -38,13 +38,14 @@ class SingleTrackParameters(torch.nn.Module):
                 self.register_parameter(f'_{key}', torch.nn.Parameter(
                     torch.tensor(value.init_value)))
             else:
-                setattr(self, f'_{key}', torch.tensor(value.init_value))
+                self.register_buffer(f'_{key}', torch.tensor(value.init_value))
 
     def forward(self):
         return
 
-    def _make_positive(self, p, init_val):
-        return init_val * torch.exp(p) / torch.exp(init_val)
+    def _make_positive(self, p: torch.Tensor, init_val: float) -> torch.Tensor:
+        iv = torch.tensor(init_val, device=p.device, dtype=p.dtype)
+        return iv * torch.exp(p) / torch.exp(iv)
 
     @property
     def m(self):
@@ -56,7 +57,7 @@ class SingleTrackParameters(torch.nn.Module):
 
     @property
     def I_z(self):
-        return self._make_positive(self._I_z, torch.tensor(self.parameters_config['I_z'][1]))
+        return self._make_positive(self._I_z, self.parameters_config['I_z'][1])
 
     @property
     def lr(self):
@@ -80,19 +81,19 @@ class SingleTrackParameters(torch.nn.Module):
 
     @property
     def Cd0(self):
-        return self._make_positive(self._Cd0, torch.tensor(self.parameters_config['Cd0'][1]))
+        return self._make_positive(self._Cd0, self.parameters_config['Cd0'][1])
 
     @property
     def Cd2(self):
-        return self._make_positive(self._Cd2, torch.tensor(self.parameters_config['Cd2'][1]))
+        return self._make_positive(self._Cd2, self.parameters_config['Cd2'][1])
 
     @property
     def Cd1(self):
-        return self._make_positive(self._Cd1, torch.tensor(self.parameters_config['Cd1'][1]))
+        return self._make_positive(self._Cd1, self.parameters_config['Cd1'][1])
 
     @property
     def Cdy1(self):
-        return self._make_positive(self._Cdy1, torch.tensor(self.parameters_config['Cdy1'][1]))
+        return self._make_positive(self._Cdy1, self.parameters_config['Cdy1'][1])
 
     @property
     def mu_static(self):
@@ -100,19 +101,19 @@ class SingleTrackParameters(torch.nn.Module):
 
     @property
     def I_e(self):
-        return self._make_positive(self._I_e, torch.tensor(self.parameters_config['I_e'][1]))
+        return self._make_positive(self._I_e, self.parameters_config['I_e'][1])
 
     @property
     def K_fi(self):
-        return self._make_positive(self._K_fi, torch.tensor(self.parameters_config['K_fi'][1]))
+        return self._make_positive(self._K_fi, self.parameters_config['K_fi'][1])
 
     @property
     def b1(self):
-        return self._make_positive(self._b1, torch.tensor(self.parameters_config['b1'][1]))
+        return self._make_positive(self._b1, self.parameters_config['b1'][1])
 
     @property
     def b0(self):
-        return self._make_positive(self._b0, torch.tensor(self.parameters_config['b0'][1]))
+        return self._make_positive(self._b0, self.parameters_config['b0'][1])
 
     @property
     def R(self):

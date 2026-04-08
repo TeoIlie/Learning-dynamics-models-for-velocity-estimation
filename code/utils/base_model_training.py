@@ -62,6 +62,8 @@ def train_base_model(args):
     device = torch.device(args.common_device)
 
     model, fit_parameters = create_base_model(args)
+    model = model.to(device)
+    fit_parameters = list(model.parameters())
 
     ode_solve = get_ode_solve_method(args, model, fit_parameters)
     train_loader, test_loader, train_dset, test_dset = get_loaders(args, mode)
