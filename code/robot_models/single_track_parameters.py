@@ -6,6 +6,7 @@ Param = collections.namedtuple(
     'param_config', ['learned', 'init_value', 'positive'], defaults=[False, 0.0, False])
 
 DEFAULT_VEHICLE_PARAMETERS = {
+    # only params marked learned=True are learned, others remain as-is
     'm': Param(learned=False, init_value=5.1),
     'g': Param(learned=False, init_value=9.81),
     'I_z': Param(learned=True, init_value=0.46),

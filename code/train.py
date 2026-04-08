@@ -132,6 +132,7 @@ def train_ukf(args, state_dim=5, control_dim=2):
             r_entropy_mean = r_entropy.mean().item()
             r_entropy_std = r_entropy.std().item()
             loss.backward()
+            # clip gradient with default value 1e3 to prevent exploding gradients
             torch.nn.utils.clip_grad_value_(fit_params, args.ukf_grad_clip)
             optimizer.step()
             train_loss += loss.item()
