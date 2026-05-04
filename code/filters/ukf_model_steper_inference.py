@@ -17,7 +17,7 @@ class UKFModelStepperInference(torch.nn.Module):
         self.dt = dt
         self.state_dim = state_dim
         self.device = device
-        self.q_entr_lb = torch.tensor(q_entr_lb)
+        self.q_entr_lb = torch.tensor(q_entr_lb, device=device)
         self.ukf = UKF(state_dim, meas_dim=4, device=device)
         pass
 
@@ -41,7 +41,7 @@ class UKFModelStepperInference(torch.nn.Module):
 
     def calc_normal_entropy(self, M):
         D = M.shape[-1]
-        return 0.5 * D * (1 + torch.log(torch.tensor([2 * torch.pi]))) + 0.5 * torch.logdet(M)
+        return 0.5 * D * (1 + torch.log(torch.tensor([2 * torch.pi], device=M.device))) + 0.5 * torch.logdet(M)
 
     def project_entropy(self, M, lower_bound):
         M2 = M.clone()

@@ -37,7 +37,7 @@ class SingleTrackPacejkaModel(torch.nn.Module):
 
 
 def observation(model: torch.nn.Module, x: torch.Tensor):
-    x_dot = model.forward(torch.tensor(0.0), x)
+    x_dot = model.forward(torch.tensor(0.0, device=x.device, dtype=x.dtype), x)
     wx = StateWrapper(x)
     wx_dot = StateWrapper(x_dot)
     a_x = wx_dot.v_x - wx.r * wx.v_y

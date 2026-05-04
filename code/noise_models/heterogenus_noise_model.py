@@ -45,13 +45,13 @@ class HeteroCovNoiseModel(torch.nn.Module):
         """
 
         LQ = torch.tril(self.Qd)
-        Q = torch.mm(LQ, LQ.T) + torch.eye(self.state_dim) * self.Q_P_min_eps
+        Q = torch.mm(LQ, LQ.T) + torch.eye(self.state_dim, device=LQ.device) * self.Q_P_min_eps
 
         LR = torch.tril(self.Rd)
         R = torch.mm(LR, LR.T)
 
         LP0 = torch.tril(self.P0d)
-        P0 = torch.mm(LP0, LP0.T) + torch.eye(self.state_dim) * \
+        P0 = torch.mm(LP0, LP0.T) + torch.eye(self.state_dim, device=LP0.device) * \
             self.Q_P_min_eps
 
         current_batch_size = x.shape[0]

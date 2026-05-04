@@ -30,10 +30,10 @@ class ConstDiagonalNoiseModel(torch.nn.Module):
         """
         current_batch_size = x_hat.shape[0]
         Q = torch.diag(self.Qd**2) + \
-            torch.eye(self.state_dim) * self.Q_P_min_eps
+            torch.eye(self.state_dim, device=self.Qd.device) * self.Q_P_min_eps
         R = torch.diag(self.Rd**2)
         P0 = torch.diag(self.P0d**2) + \
-            torch.eye(self.state_dim) * self.Q_P_min_eps
+            torch.eye(self.state_dim, device=self.P0d.device) * self.Q_P_min_eps
         Qb = Q.unsqueeze(0).repeat(current_batch_size, 1, 1)
         Rb = R.unsqueeze(0).repeat(current_batch_size, 1, 1)
         P0b = P0.unsqueeze(0).repeat(current_batch_size, 1, 1)

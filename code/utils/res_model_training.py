@@ -30,7 +30,7 @@ def create_residual_model(args):
 
     base_model_dict = find_model(args, "base")
 
-    base_model.load_state_dict(base_model_dict)
+    base_model.load_state_dict(base_model_dict, strict=False)
 
     res_model = ResidualNeuralModel(base_model,
                                     res_mlp_size=args.res_mlp_size,
@@ -52,6 +52,8 @@ def train_residual_model(args):
     train_loader, test_loader, train_dset, test_dset = get_loaders(args, mode)
 
     model, fit_parameters = create_residual_model(args)
+    model = model.to(device)
+    fit_parameters = list(model.nn.parameters())
 
     ode_solve = get_ode_solve_method(args, model, fit_parameters)
 

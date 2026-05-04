@@ -43,7 +43,7 @@ def get_wandb_model(model_name):
     model_dict = torch.load(model_path)
     noise_model_dict = torch.load(noise_model_path)
 
-    model.load_state_dict(model_dict)
+    model.load_state_dict(model_dict, strict=False)
     noise_model.load_state_dict(noise_model_dict)
 
     # raise NotImplementedError("This function is not implemented yet")
